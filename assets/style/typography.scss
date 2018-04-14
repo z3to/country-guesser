@@ -1,0 +1,170 @@
+.page-content > *:first-child {
+  margin-top: 0 !important;
+}
+
+a, .a, .link {
+  color: $brand-color;
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: 500;
+
+  &[href^='#'], &:not([href]) {
+    color: $brand-color;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: $text-color;
+  }
+
+  &:visited {
+    color: darken($brand-color, 15%);
+  }
+
+  &.nuxt-link-active {
+    color: $color-active;
+  }
+
+  &:hover, &:focus {
+    border-bottom: 1px solid $brand-color;
+    color: darken($brand-color, 10%);
+  }
+}
+
+.link-hover {
+  border-bottom: 1px dashed $brand-color;
+
+  &:hover, &:focus {
+    border-bottom-style: solid;
+    color: $brand-color;
+  }
+}
+
+h1 {
+  font-size: 1.6rem;
+  // font-weight: normal;
+  // text-transform: uppercase;
+  // letter-spacing: 0.05em;
+  font-weight: bold;
+}
+
+h2 {
+  font-weight: normal;
+  font-size: 1.2em;
+  font-weight: 700;
+  line-height: 1.1;
+  margin: 1rem 0 2rem 0;
+}
+
+p, small, li {
+  padding: 0 0 0.5em;
+  font-size: 0.85rem;
+}
+
+small {
+  font-size: 0.7rem;
+}
+
+h3 {
+  font-size: 1em;
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 1rem 0;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+h4 {
+  font-size: 0.9em;
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 1rem 0;
+}
+
+h5 {
+  font-size: 0.9em;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+ul {
+  list-style: none;
+}
+
+.center {
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+table {
+  width: 100%;
+  font-size: 0.8rem;
+  line-height: 1.2em;
+  border-collapse: collapse;
+
+  td, th {
+    padding: 0.8em 0.3em;
+    vertical-align: top;
+
+    &.right {
+      text-align: right;
+    }
+  }
+
+  thead {
+    * {
+      font-weight: 600;
+    }
+
+    tr {
+      &.source {
+        font-size: 0.7rem;
+
+        th {
+          font-weight: 400;
+
+          sup {
+            font-weight: 400;
+          }
+        }
+      }
+
+      &:last-child th {
+        border-bottom: 1px solid #999;
+        padding-bottom: 0.5rem;
+      }
+    }
+
+    th {
+      text-align: left;
+    }
+  }
+
+  tbody {
+    tr td {
+      border-bottom: 1px solid #999;
+    }
+
+    tr:hover {
+      color: #EC3A4D;
+    }
+
+    tr:first-child td {
+      padding-top: 0.5rem;
+    }
+
+    tr:last-child td {
+      border: 0;
+      padding-bottom: 0.5rem;
+    }
+  }
+
+  tfoot {
+    tr:first-child td {
+      padding-top: 0.5rem;
+      border-top: 1px solid #999;
+    }
+  }
+}

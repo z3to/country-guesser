@@ -1,0 +1,108 @@
+@charset "utf-8";
+
+$font-family-default: "Helvetica Neue", "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Open Sans", Helvetica, sans-serif !default;
+$font-family-alternative: "le-monde-livre-std", Garamond, Georgia, "Times New Roman", Times, serif !default;
+$base-font-weight: 400 !default;
+$base-line-height: 1.7 !default;
+
+$spacing-unit:     2rem !default;
+
+$text-color:       #222 !default;
+$brand-color:      #EC3A4D !default;
+$color-active: #40A5E7 !default;
+
+// Use media queries like this:
+// @include media-query($on-palm) {
+//   .wrapper {
+//     padding-right: $spacing-unit / 2;
+//     padding-left: $spacing-unit / 2;
+//   }
+// }
+
+$on-palm:          600px !default;
+$on-laptop:        800px !default;
+
+@mixin media-query($device) {
+  @media screen and (min-width: $device) {
+    @content;
+  }
+}
+
+blockquote, body, dd, dl, figure, h1, h2, h3, h4, h5, h6, hr, ol, p, pre, time, ul {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font: normal normal 105%/1.7 $font-family-default;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-feature-settings: "kern" 1;
+     -moz-font-feature-settings: "kern" 1;
+       -o-font-feature-settings: "kern" 1;
+          font-feature-settings: "kern" 1;
+  font-kerning: normal;
+  color: $text-color;
+}
+
+.mobile-invisible {
+	visibility: hidden;
+  display: none;
+}
+
+@include media-query($on-palm) {
+  .mobile-invisible {
+  	visibility: visible;
+    display: inherit;
+  }
+}
+
+input {
+  user-select: none;
+  vertical-align: middle;
+  white-space: nowrap;
+  zoom: 1;
+  border: 0;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: none;
+}
+
+img {
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+*, *:before, *:after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+nav li, nav ol {
+  display: inline-block;
+  list-style: none;
+}
+
+figure > img {
+  display: block;
+}
+
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+@import
+  "typography",
+  "layout"
+;
