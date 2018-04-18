@@ -147,8 +147,9 @@ table {
       border-bottom: 1px solid #999;
     }
 
-    tr:hover {
+    .warn {
       color: #EC3A4D;
+      font-weight: 600;
     }
 
     tr:first-child td {
