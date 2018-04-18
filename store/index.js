@@ -3,12 +3,14 @@ import Vuex from 'vuex'
 import _ from 'lodash'
 import * as data from '../data/countries.json'
 const cleanDiacritics = require('underscore.string/cleanDiacritics')
-// const levenshtein = require('underscore.string/levenshtein')
+const levenshtein = require('underscore.string/levenshtein')
 
 Vue.use(Vuex)
 
 function simplify (str) {
-  return cleanDiacritics(_.toLower(str)).replace(/\s/g, '')
+  const long = str.replace(/(St)(\.){0,1}\s/, 'Saint')
+  const sorted = long.split(' ').sort().join('')
+  return cleanDiacritics(_.toLower(sorted)).replace(/\s/g, '')
 }
 
 const countries = _.map(data, cnty => {
@@ -53,6 +55,7 @@ const store = () => new Vuex.Store({
       return _.map(state.lines, line => {
         const input = simplify(line)
         let output = {
+          'op': input,
           'input': line,
           'matches': [],
           'selectedMatchIndex': 0,
@@ -65,22 +68,69 @@ const store = () => new Vuex.Store({
         }
 
         // Find matches
-        const results = []
+        // const results = []
 
-        const exactCountries = _.filter(state.countries, country => {
-          return _.indexOf(country.variants, input) > -1
-        })
+        // const exactCountries = _.filter(state.countries, country => {
+        //   return _.indexOf(country.variants, input) > -1
+        // })
 
-        _.each(exactCountries, country => {
-          const exact = {
-            'probability': 100 / exactCountries.length,
+        // _.each(exactCountries, country => {
+        //   const exact = {
+        //     'probability': 100 / exactCountries.length,
+        //     'match': country
+        //   }
+        //   results.push(exact)
+        // })
+
+        const rankedCountries = _.map(state.countries, country => {
+          // const exactMatches = _.indexOf(country.variants, input) > -1
+
+          let probability = 0
+
+          // console.log('varianten', country.variants.length)
+          const probabilities = _.map(country.variants, variant => {
+            const distance = levenshtein(variant, input)
+            if (distance < 4) {
+              return distance
+              // console.log('Distance', distance, variant)
+              // if (distance === 0) {
+              //   probability += 100
+              // } else if (distance === 1) {
+              //   probability += 50
+              // } else if (distance === 2) {
+              //   probability += 25
+              // }
+            }
+          })
+
+          const filteredProbabilities = _.filter(probabilities, probability => {
+            return !_.isUndefined(probability)
+          })
+
+          // console.log(probabilities.length, country.variants.length)
+          if (filteredProbabilities.length) {
+            const amountValues = probabilities.length - filteredProbabilities.length
+            const values = _.countBy(filteredProbabilities)
+            probability += 90 * 1 / amountValues * _.get(values, '0', 0) + 10
+            probability += 9 * 1 / amountValues * _.get(values, '1', 0) + 1
+            probability += 0.9 * 1 / amountValues * _.get(values, '2', 0) + 0.1
+            probability += 0.09 * 1 / amountValues * _.get(values, '2', 0) + 0.01
+          }
+
+          const match = {
+            'probability': probability,
             'match': country
           }
-          results.push(exact)
+
+          return match
         })
 
-        if (results.length) {
-          output['matches'] = _.sortBy(results, 'probability')
+        const matchedCountries = _.filter(rankedCountries, country => {
+          return country['probability'] > 0
+        })
+
+        if (matchedCountries.length) {
+          output['matches'] = _.reverse(_.sortBy(matchedCountries, 'probability')).slice(0, 4)
           output['message'] = 'Matches found'
         } else {
           output['message'] = 'No results found'

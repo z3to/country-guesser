@@ -26,14 +26,14 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="line in matches">
+            <tr v-for="line in matches" :class="{ 'warn' : !line['matches'].length }">
               <td>
-                {{ line['input'] }}
+                {{ line['input'] }} ({{ line['op'] }})
               </td>
               <td>
                 <ol v-if="line['matches'].length">
                   <li v-for="match in line['matches']">
-                    {{ match.match.label }} ({{ match.probability }}%)
+                    {{ match.match.label }} ({{ match.probability.toFixed(2) }}%)
                   </li>
                 </ol>
                 <span v-else>{{ line['message'] }}</span>
