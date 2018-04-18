@@ -64,12 +64,23 @@ const store = () => new Vuex.Store({
           return output
         }
 
-        const result = _.find(state.countries, country => {
+        // Find matches
+        const results = []
+
+        const exactCountries = _.filter(state.countries, country => {
           return _.indexOf(country.variants, input) > -1
         })
 
-        if (!_.isUndefined(result)) {
-          output['matches'] = [result]
+        _.each(exactCountries, country => {
+          const exact = {
+            'rating': 100 / exactCountries.length,
+            'match': country
+          }
+          results.push(exact)
+        })
+
+        if (results.length) {
+          output['matches'] = _.sortBy(results, 'rating')
           output['message'] = 'Matches found'
         } else {
           output['message'] = 'No results found'
@@ -88,7 +99,7 @@ const store = () => new Vuex.Store({
         if (_.isUndefined(selectedMatch)) {
           return 'Selected match not available'
         } else {
-          const selectedMatchCode = selectedMatch[state.code]
+          const selectedMatchCode = selectedMatch['match'][state.code]
 
           if (_.isUndefined(selectedMatchCode)) {
             return 'Code not available for match'
@@ -106,7 +117,7 @@ const store = () => new Vuex.Store({
     },
     UPDATE_LINES (state, value) {
       // console.log('UPDATE_LINES')
-      state.lines = value.split('\n')
+      state.lines = value.replace(/\s*$/, '').split('\n')
     }
   },
   actions: {
