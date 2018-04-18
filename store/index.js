@@ -27,13 +27,16 @@ const countries = _.map(data, cnty => {
     variantsList.push(tranlation['common'])
   })
 
+  const variantsListSimple = _.map(variantsList, variant => { return simplify(variant) })
+  const variantsListUnique = _.uniq(variantsListSimple)
+
   return {
     'label': cnty['name']['common'],
     'cca2': cnty['cca2'],
     'ccn3': cnty['ccn3'],
     'cca3': cnty['cca3'],
     'cioc': cnty['cioc'],
-    'variants': _.map(variantsList, variant => { return simplify(variant) })
+    'variants': variantsListUnique
   }
 })
 
@@ -46,36 +49,53 @@ const store = () => new Vuex.Store({
     code: 'cca3'
   },
   getters: {
-    output (state) {
-      console.log('output')
+    matches (state) {
       return _.map(state.lines, line => {
         const input = simplify(line)
-        console.log(input, line)
-        if (input.length < 2) {
-          return '—'
+        let output = {
+          'input': line,
+          'matches': [],
+          'selectedMatchIndex': 0,
+          'message': ''
         }
+
+        if (input.length < 2) {
+          output['message'] = 'Input too short'
+          return output
+        }
+
         const result = _.find(state.countries, country => {
           return _.indexOf(country.variants, input) > -1
         })
+
         if (!_.isUndefined(result)) {
-          result['input'] = line
+          output['matches'] = [result]
+          output['message'] = 'Matches found'
+        } else {
+          output['message'] = 'No results found'
         }
-        console.log(input, line)
-        return result
+
+        return output
       })
     },
-    outputPossibilities (state, getters) {
-      console.log('outputPossibilities')
-      return _.map(getters.output, line => {
-        if (_.isUndefined(line)) {
-          return 'No matching found'
+    output (state, getters) {
+      return _.map(getters.matches, line => {
+        const matches = line['matches']
+        if (!matches.length) {
+          return 'No matches found'
         }
-        if (_.isUndefined(line[state.code])) {
-          return 'Code ' + state.code + ' not available for this country'
+        const selectedMatch = line['matches'][line['selectedMatchIndex']]
+        if (_.isUndefined(selectedMatch)) {
+          return 'Selected match not available'
+        } else {
+          const selectedMatchCode = selectedMatch[state.code]
+
+          if (_.isUndefined(selectedMatchCode)) {
+            return 'Code not available for match'
+          } else {
+            return selectedMatchCode
+          }
         }
-        console.log(line['input'])
-        // return line['input'] + ',' + line[state.code]
-        return line[state.code]
       })
     }
   },

@@ -26,12 +26,12 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="line in lines">
+            <tr v-for="line in matches">
               <td>
-                {{ line }}
+                {{ line['input'] }}
               </td>
               <td>
-                …
+                {{ line['message'] }}
               </td>
             </tr>
           </tbody>
@@ -62,7 +62,7 @@
         </table>
       </section> -->
       <section>
-        <textarea>{{ outputPossibilities.join('\n') }}</textarea>
+        <textarea>{{ output.join('\n') }}</textarea>
       </section>
     </div>
   </div>
@@ -83,13 +83,12 @@
     computed: {
       ...mapState([
         'lines',
-        'output',
         'rawInput',
         'countries'
       ]),
       ...mapGetters([
-        'output',
-        'outputPossibilities'
+        'matches',
+        'output'
       ])
     },
     watch: {
