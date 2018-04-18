@@ -33,7 +33,7 @@
               <td>
                 <ol v-if="line['matches'].length">
                   <li v-for="match in line['matches']">
-                    {{ match.match.label }} ({{ match.rating }}%)
+                    {{ match.match.label }} ({{ match.probability }}%)
                   </li>
                 </ol>
                 <span v-else>{{ line['message'] }}</span>

@@ -73,14 +73,14 @@ const store = () => new Vuex.Store({
 
         _.each(exactCountries, country => {
           const exact = {
-            'rating': 100 / exactCountries.length,
+            'probability': 100 / exactCountries.length,
             'match': country
           }
           results.push(exact)
         })
 
         if (results.length) {
-          output['matches'] = _.sortBy(results, 'rating')
+          output['matches'] = _.sortBy(results, 'probability')
           output['message'] = 'Matches found'
         } else {
           output['message'] = 'No results found'
