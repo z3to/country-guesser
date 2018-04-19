@@ -8,17 +8,34 @@ body, #__nuxt, #__layout, .page, .page-body {
 }
 
 .page-body {
+  display: flex;
+  flex-direction: column;
+
   header {
     flex: 1;
     width: 100vw;
-    padding: 1rem;
+    padding: 1rem 1rem 0.5rem;
   }
 
   .page-tool {
+    flex: 5;
+    padding: 0.5rem 0rem 1rem;
     display: flex;
 
     section {
+      margin: 0 0.5rem;
+      overflow-y: scroll;
+      min-height: 100%;
       flex: 1;
+      background-color: #f8f8f8;
+
+      &:first-child {
+        margin-left: 1rem;
+      }
+
+      &:last-child {
+        margin-right: 1rem;
+      }
 
       &.possibilites {
         flex: 2;
@@ -36,14 +53,14 @@ body, #__nuxt, #__layout, .page, .page-body {
         font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
         letter-spacing: 0.05em;
         font-size: 0.85em;
-        background-color: #f8f8f8;
+        background-color: transparent;
         white-space: pre-wrap;
         overflow: auto;
       }
 
-      &:nth-child(odd) {
-        background-color: #eee;
-      }
+      // &:nth-child(odd) {
+      //   background-color: #eee;
+      // }
     }
   }
 }
