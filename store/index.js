@@ -8,7 +8,7 @@ const levenshtein = require('underscore.string/levenshtein')
 Vue.use(Vuex)
 
 function simplify (str) {
-  const long = str.replace(/(St)(\.){0,1}\s/, 'Saint')
+  const long = str.replace(/(St)(\.){0,1}\s/, 'Saint').replace(/[^0-9a-z]/gi, '')
   const sorted = long.split(' ').sort().join('')
   return cleanDiacritics(_.toLower(sorted)).replace(/\s/g, '')
 }
@@ -92,14 +92,6 @@ const store = () => new Vuex.Store({
             const distance = levenshtein(variant, input)
             if (distance < 4) {
               return distance
-              // console.log('Distance', distance, variant)
-              // if (distance === 0) {
-              //   probability += 100
-              // } else if (distance === 1) {
-              //   probability += 50
-              // } else if (distance === 2) {
-              //   probability += 25
-              // }
             }
           })
 
@@ -107,14 +99,25 @@ const store = () => new Vuex.Store({
             return !_.isUndefined(probability)
           })
 
-          // console.log(probabilities.length, country.variants.length)
           if (filteredProbabilities.length) {
             const amountValues = probabilities.length - filteredProbabilities.length
             const values = _.countBy(filteredProbabilities)
-            probability += 90 * 1 / amountValues * _.get(values, '0', 0) + 10
-            probability += 9 * 1 / amountValues * _.get(values, '1', 0) + 1
-            probability += 0.9 * 1 / amountValues * _.get(values, '2', 0) + 0.1
-            probability += 0.09 * 1 / amountValues * _.get(values, '2', 0) + 0.01
+
+            if (_.has(values, '0')) {
+              probability += 90 * 1 / amountValues * values['0'] + 10
+            }
+
+            if (_.has(values, '1')) {
+              probability += 9 * 1 / amountValues * values['1'] + 1
+            }
+
+            if (_.has(values, '2')) {
+              probability += 0.9 * 1 / amountValues * values['2'] + 0.1
+            }
+
+            if (_.has(values, '3')) {
+              probability += 0.09 * 1 / amountValues * values['3'] + 0.01
+            }
           }
 
           const match = {
