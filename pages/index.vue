@@ -28,7 +28,7 @@
           <tbody>
             <tr v-for="line in matches" :class="{ 'warn' : !line['matches'].length }">
               <td>
-                {{ line['input'] }} ({{ line['op'] }})
+                {{ line['input'] }}
               </td>
               <td>
                 <ol v-if="line['matches'].length">

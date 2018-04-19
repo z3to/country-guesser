@@ -55,7 +55,6 @@ const store = () => new Vuex.Store({
       return _.map(state.lines, line => {
         const input = simplify(line)
         let output = {
-          'op': input,
           'input': line,
           'matches': [],
           'selectedMatchIndex': 0,
