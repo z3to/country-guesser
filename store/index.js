@@ -34,11 +34,13 @@ const countries = _.map(data, cnty => {
 
   return {
     'label': cnty['name']['common'],
-    'cca2': cnty['cca2'],
-    'ccn3': cnty['ccn3'],
-    'cca3': cnty['cca3'],
-    'cioc': cnty['cioc'],
-    'variants': variantsListUnique
+    'variants': variantsListUnique,
+    'codes': {
+      'cca2': cnty['cca2'],
+      'ccn3': cnty['ccn3'],
+      'cca3': cnty['cca3'],
+      'cioc': cnty['cioc']
+    }
   }
 })
 
@@ -48,7 +50,7 @@ const store = () => new Vuex.Store({
     rawInput: '',
     lines: [],
     activeStatus: 'default',
-    code: 'cca3'
+    code: 'cca2'
   },
   getters: {
     matches (state) {
@@ -151,7 +153,7 @@ const store = () => new Vuex.Store({
         if (_.isUndefined(selectedMatch)) {
           return 'Selected match not available'
         } else {
-          const selectedMatchCode = selectedMatch['match'][state.code]
+          const selectedMatchCode = selectedMatch['match']['codes'][state.code]
 
           if (_.isUndefined(selectedMatchCode)) {
             return 'Code not available for match'
