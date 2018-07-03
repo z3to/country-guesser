@@ -52,6 +52,13 @@ const store = () => new Vuex.Store({
       { text: 'ccn3', value: 'ccn3' },
       { text: 'cca3', value: 'cca3' },
       { text: 'cioc', value: 'cioc' }
+    ],
+    optionLineBreak: '\n',
+    lineBreaks: [
+      { text: 'Tab', value: '\n' },
+      { text: 'Space', value: ' ' },
+      { text: 'Semicolon', value: ';' },
+      { text: 'Comma', value: ',' }
     ]
   },
   getters: {
@@ -184,9 +191,9 @@ const store = () => new Vuex.Store({
       // console.log('UPDATE_RAW_INPUT')
       state.rawInput = value
     },
-    UPDATE_LINES (state, value) {
+    UPDATE_LINES (state) {
       // console.log('UPDATE_LINES')
-      state.lines = value.replace(/\s*$/, '').split('\n')
+      state.lines = state.rawInput.replace(/\s*$/, '').split(state.optionLineBreak)
     },
     SET_OPTION_OUTPUT_CODE (state, value) {
       // console.log('UPDATE_RAW_INPUT')
@@ -199,14 +206,18 @@ const store = () => new Vuex.Store({
     SET_OPTION_COMMON_NAME (state, value) {
       // console.log('UPDATE_RAW_INPUT')
       state.optionCommonName = value
+    },
+    SET_OPTION_LINE_BREAK (state, value) {
+      // console.log('UPDATE_RAW_INPUT')
+      state.optionLineBreak = value
     }
   },
   actions: {
     updateRawInput ({ commit }, key) {
       commit('UPDATE_RAW_INPUT', key)
     },
-    updateLines: _.debounce(function ({ commit }, key) {
-      commit('UPDATE_LINES', key)
+    updateLines: _.debounce(function ({ commit }, value) {
+      commit('UPDATE_LINES')
     }, 500),
     setOptionOutputCode ({ commit }, { value }) {
       commit('SET_OPTION_OUTPUT_CODE', value)
@@ -216,6 +227,10 @@ const store = () => new Vuex.Store({
     },
     setOptionCommonName ({ commit }, { value }) {
       commit('SET_OPTION_COMMON_NAME', value)
+    },
+    setOptionLineBreak ({ commit }, { value }) {
+      commit('SET_OPTION_LINE_BREAK', value)
+      commit('UPDATE_LINES')
     }
   }
 })
