@@ -1,5 +1,5 @@
 <template>
-  <tr :class="{ 'warn' : !item['matches'].length }">
+  <tr :class="{ 'warn' : !item['matches'].length || item['type']['ambiguous'] }">
     <td>
       {{ id + 1 }} <span class="input">{{ item['input'] }}</span>
     </td>
