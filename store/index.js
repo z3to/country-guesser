@@ -2,16 +2,10 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import _ from 'lodash'
 import * as data from '../data/countries.json'
-const cleanDiacritics = require('underscore.string/cleanDiacritics')
+import { simplify } from '~/assets/js/simplify.js'
 const levenshtein = require('underscore.string/levenshtein')
 
 Vue.use(Vuex)
-
-function simplify (str) {
-  const long = str.replace(/(St)(\.){0,1}\s/, 'Saint').replace(/[^0-9a-z]/gi, '')
-  const sorted = long.split(' ').sort().join('')
-  return cleanDiacritics(_.toLower(sorted)).replace(/\s/g, '')
-}
 
 const countries = _.map(data, cnty => {
   const variantsList = []
