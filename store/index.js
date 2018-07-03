@@ -124,6 +124,7 @@ const store = () => new Vuex.Store({
           }
 
           const match = {
+            'input': output.input,
             'probability': probability,
             'match': country
           }
@@ -156,7 +157,11 @@ const store = () => new Vuex.Store({
           return 'Selected match not available'
         } else {
           const output = []
-          // const selectedMatchCode = selectedMatch['match']['codes'][state.optionOutputCode]
+
+          if (state.optionInputValue) {
+            output.push(selectedMatch['input'])
+          }
+
           output.push(selectedMatch['match']['codes'][state.optionOutputCode])
 
           if (state.optionCommonName) {
