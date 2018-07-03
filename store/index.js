@@ -44,7 +44,15 @@ const store = () => new Vuex.Store({
     rawInput: '',
     lines: [],
     activeStatus: 'default',
-    code: 'cca2'
+    optionOutputCode: 'cca2',
+    optionInputValue: false,
+    optionCommonName: false,
+    codes: [
+      { text: 'cca2', value: 'cca2' },
+      { text: 'ccn3', value: 'ccn3' },
+      { text: 'cca3', value: 'cca3' },
+      { text: 'cioc', value: 'cioc' }
+    ]
   },
   getters: {
     matches (state) {
@@ -147,13 +155,21 @@ const store = () => new Vuex.Store({
         if (_.isUndefined(selectedMatch)) {
           return 'Selected match not available'
         } else {
-          const selectedMatchCode = selectedMatch['match']['codes'][state.code]
+          const output = []
+          // const selectedMatchCode = selectedMatch['match']['codes'][state.optionOutputCode]
+          output.push(selectedMatch['match']['codes'][state.optionOutputCode])
 
-          if (_.isUndefined(selectedMatchCode)) {
-            return 'Code not available for match'
-          } else {
-            return selectedMatchCode
+          if (state.optionCommonName) {
+            output.push(selectedMatch['match']['label'])
           }
+
+          return output.join(',')
+
+          // if (_.isUndefined(selectedMatchCode)) {
+          //   return 'Code not available for match'
+          // } else {
+          //   return selectedMatchCode
+          // }
         }
       })
     }
@@ -166,6 +182,18 @@ const store = () => new Vuex.Store({
     UPDATE_LINES (state, value) {
       // console.log('UPDATE_LINES')
       state.lines = value.replace(/\s*$/, '').split('\n')
+    },
+    SET_OPTION_OUTPUT_CODE (state, value) {
+      // console.log('UPDATE_RAW_INPUT')
+      state.optionOutputCode = value
+    },
+    SET_OPTION_INPUT_VALUE (state, value) {
+      // console.log('UPDATE_RAW_INPUT')
+      state.optionInputValue = value
+    },
+    SET_OPTION_COMMON_NAME (state, value) {
+      // console.log('UPDATE_RAW_INPUT')
+      state.optionCommonName = value
     }
   },
   actions: {
@@ -174,7 +202,16 @@ const store = () => new Vuex.Store({
     },
     updateLines: _.debounce(function ({ commit }, key) {
       commit('UPDATE_LINES', key)
-    }, 500)
+    }, 500),
+    setOptionOutputCode ({ commit }, { value }) {
+      commit('SET_OPTION_OUTPUT_CODE', value)
+    },
+    setOptionInputValue ({ commit }, { value }) {
+      commit('SET_OPTION_INPUT_VALUE', value)
+    },
+    setOptionCommonName ({ commit }, { value }) {
+      commit('SET_OPTION_COMMON_NAME', value)
+    }
   }
 })
 
