@@ -55,7 +55,8 @@ const store = () => new Vuex.Store({
     ],
     optionLineBreak: '\n',
     lineBreaks: [
-      { text: 'Tab', value: '\n' },
+      { text: 'Newline', value: '\n' },
+      { text: 'Tab', value: '\t' },
       { text: 'Space', value: ' ' },
       { text: 'Semicolon', value: ';' },
       { text: 'Comma', value: ',' }
