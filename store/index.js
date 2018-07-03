@@ -150,6 +150,12 @@ const store = () => new Vuex.Store({
           output['message'] = 'No results found'
         }
 
+        output['type'] = {
+          'unsuccessful': output.matches.length === 0,
+          'successful': output.matches.length > 0 && output.matches[0].probability >= 10,
+          'ambiguous': (output.matches.length > 0 && output.matches[0].probability < 10) || (output.matches.length > 1 && output.matches[0].probability - output.matches[1].probability < 10)
+        }
+
         return output
       })
     },
