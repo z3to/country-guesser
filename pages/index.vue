@@ -26,85 +26,23 @@
       </section>
     </div>
     <div class="page-tool">
-      <section class="input">
-        <textarea :value="rawInput" @input="triggerInput" spellcheck="false" placeholder="Country name"></textarea>
-      </section>
-      <section class="details">
-        <table>
-          <thead>
-            <tr>
-              <td>
-                Input
-              </td>
-              <td>
-                Possibilities
-              </td>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="line in matches" :class="{ 'warn' : !line['matches'].length }">
-              <td>
-                {{ line['input'] }}
-              </td>
-              <td>
-                <ol v-if="line['matches'].length">
-                  <li v-for="match in line['matches']">
-                    {{ match.match.label }} ({{ match.probability.toFixed(2) }}%)
-                  </li>
-                </ol>
-                <span v-else>{{ line['message'] }}</span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-      <section class="output">
-        <textarea>{{ output.join('\n') }}</textarea>
-      </section>
+      <Input />
+      <Details />
+      <Output />
     </div>
   </div>
 </template>
 
 <script>
-  import _ from 'lodash'
-
-  import { mapState, mapActions, mapGetters } from 'vuex'
-  // import Vis from '~/components/Vis.vue'
-  // import LinkHover from '~/components/LinkHover.vue'
+  import Details from '~/components/Details.vue'
+  import Input from '~/components/Input.vue'
+  import Output from '~/components/Output.vue'
 
   export default {
-    data: function () {
-      return {
-      }
-    },
-    computed: {
-      ...mapState([
-        'lines',
-        'rawInput',
-        'countries'
-      ]),
-      ...mapGetters([
-        'matches',
-        'output'
-      ])
-    },
-    watch: {
-    },
-    methods: {
-      ...mapActions([
-        'updateRawInput',
-        'updateLines'
-      ]),
-      triggerInput: _.debounce(function (e) {
-        const { value } = e.target
-
-        this.updateRawInput(value)
-        this.updateLines(value)
-      }, 0)
-    },
     components: {
-    },
-    mounted () {
+      Details,
+      Input,
+      Output
     }
   }
 </script>
