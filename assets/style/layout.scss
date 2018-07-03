@@ -11,23 +11,33 @@ body, #__nuxt, #__layout, .page, .page-body {
   display: flex;
   flex-direction: column;
 
-  header {
-    flex: 1;
+  .page-header, .page-options {
     width: 100vw;
     padding: 1rem 1rem 0.5rem;
   }
 
-  .page-tool {
-    flex: 5;
-    padding: 0.5rem 0rem 1rem;
+  .page-options, .page-tool {
     display: flex;
+
+    section {
+      flex: 2;
+
+      &.input, &.output {
+        flex: 1;
+      }
+    }
+  }
+
+  .page-tool {
+    flex: 1;
+    padding: 0.5rem 0rem 1rem;
 
     section {
       margin: 0 0.5rem;
       overflow-y: scroll;
       min-height: 100%;
-      flex: 1;
       background-color: #f8f8f8;
+      border: 1px solid #eee;
 
       &:first-child {
         margin-left: 1rem;
@@ -35,10 +45,6 @@ body, #__nuxt, #__layout, .page, .page-body {
 
       &:last-child {
         margin-right: 1rem;
-      }
-
-      &.possibilites {
-        flex: 2;
       }
 
       textarea {

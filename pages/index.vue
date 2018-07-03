@@ -1,19 +1,35 @@
 <template>
   <div class="page-body">
-    <header>
+    <header class="page-header">
       <h1>Country Lookup</h1>
       <p>Put in a list of countries in the left panel, check the possible matchings and copy the output list.</p>
-      <h2>Options</h2>
-      <ul>
-        <li>Output code: </li>
-        <li>Include input value</li>
-      </ul>
     </header>
-    <div class="page-tool">
-      <section>
-        <textarea :value="rawInput" @input="triggerInput" spellcheck="false"></textarea>
+    <div class="page-options">
+      <section class="input">
+        <h2>Input</h2>
       </section>
-      <section class="possibilites">
+      <section class="details">
+        <h2>Details</h2>
+        <ul>
+          <li>all 5</li>
+          <li>ambiguous 0</li>
+          <li>successful 3</li>
+          <li>unsuccessful 2</li>
+        </ul>
+      </section>
+      <section class="output">
+        <h2>Output</h2>
+        <ul>
+          <li>Output code: </li>
+          <li>Include input value</li>
+        </ul>
+      </section>
+    </div>
+    <div class="page-tool">
+      <section class="input">
+        <textarea :value="rawInput" @input="triggerInput" spellcheck="false" placeholder="Country name"></textarea>
+      </section>
+      <section class="details">
         <table>
           <thead>
             <tr>
@@ -42,31 +58,7 @@
           </tbody>
         </table>
       </section>
-<!--       <section>
-        <table>
-          <thead>
-            <tr>
-              <td>
-                Country
-              </td>
-              <td>
-                cca3
-              </td>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="country in countries">
-              <td>
-                {{ country.label }}
-              </td>
-              <td>
-                {{ country.cca3 }}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </section> -->
-      <section>
+      <section class="output">
         <textarea>{{ output.join('\n') }}</textarea>
       </section>
     </div>
