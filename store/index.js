@@ -60,13 +60,23 @@ const store = () => new Vuex.Store({
       { text: 'Space', value: ' ' },
       { text: 'Semicolon', value: ';' },
       { text: 'Comma', value: ',' }
-    ]
+    ],
+    cache: {}
   },
   getters: {
     matches (state) {
-      return _.map(state.lines, line => {
+      console.log('new matches')
+      const matches = _.map(state.lines, line => {
         const input = simplify(line)
+
+        if (!_.isUndefined(state.cache[input])) {
+          console.log('found', input, 'in cache', state.cache[input]['selectedMatchIndex'])
+          return state.cache[input]
+        }
+        console.log('not found')
+
         let output = {
+          'id': input,
           'input': line,
           'matches': [],
           'selectedMatchIndex': 0,
@@ -132,7 +142,7 @@ const store = () => new Vuex.Store({
           }
 
           const match = {
-            'input': output.input,
+            'input': line,
             'probability': probability,
             'match': country
           }
@@ -157,8 +167,11 @@ const store = () => new Vuex.Store({
           'ambiguous': (output.matches.length > 0 && output.matches[0].probability < 10) || (output.matches.length > 1 && output.matches[0].probability - output.matches[1].probability < 10)
         }
 
+        state.cache[input] = output
+
         return output
       })
+      return Object.freeze(matches)
     },
     output (state, getters) {
       return _.map(getters.matches, line => {
@@ -217,6 +230,14 @@ const store = () => new Vuex.Store({
     SET_OPTION_LINE_BREAK (state, value) {
       // console.log('UPDATE_RAW_INPUT')
       state.optionLineBreak = value
+    },
+    SET_SELECTED_MATCH (state, { input, match }) {
+      // console.log('UPDATE_RAW_INPUT')
+      // Vue.set(state, 'input.selectedMatchIndex', match)
+      const obj = state.cache[input]
+      obj['selectedMatchIndex'] = match
+      state.cache = { ...state.cache, input: obj }
+      // state.cache[input]['selectedMatchIndex'] = match
     }
   },
   actions: {
@@ -237,6 +258,10 @@ const store = () => new Vuex.Store({
     },
     setOptionLineBreak ({ commit }, { value }) {
       commit('SET_OPTION_LINE_BREAK', value)
+      commit('UPDATE_LINES')
+    },
+    setSelectedMatch ({ commit }, options) {
+      commit('SET_SELECTED_MATCH', options)
       commit('UPDATE_LINES')
     }
   }

@@ -16,7 +16,7 @@
           </span>
         </li>
         <li v-else v-for="(match, n) in item['matches']">
-          <span :class="{ 'selected': n === item['selectedMatchIndex'] }">{{ match.match.label }} ({{ match.probability.toFixed(2) }}%)</span>
+          <span :class="{ 'selected': n === item['selectedMatchIndex'], 'clickable': true }" @click="setSelectedMatch({ input: item.id, match: n })">{{ match.match.label }} ({{ match.probability.toFixed(2) }}%)</span>
           <span v-if="n === 0" @click="collapse()" class="clickable">Collapse</span>
         </li>
       </ol>
@@ -26,21 +26,35 @@
 </template>
 
 <script>
-  // import { mapState, mapActions } from 'vuex'
+  import { mapActions } from 'vuex'
 
   export default {
-    props: ['item', 'id'],
+    props: ['item', 'id', 'selected'],
     data: function () {
       return {
-        isExpand: false
+        isExpand: false,
+        selectedMatch: 0
       }
     },
     methods: {
+      ...mapActions([
+        'setSelectedMatch'
+      ]),
       expand: function () {
         this.isExpand = true
       },
       collapse: function () {
         this.isExpand = false
+      }
+    },
+    watch: {
+    // whenever question changes, this function will run
+      selected: {
+        handler: function () {
+          // console.log(this)
+          this.selectedMatch = this.selected
+        },
+        deep: true
       }
     }
   }
@@ -61,5 +75,9 @@
 
   .possibilities {
     width: 70%;
+  }
+
+  ol {
+    list-style: none;
   }
 </style>

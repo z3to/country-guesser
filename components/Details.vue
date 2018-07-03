@@ -12,7 +12,7 @@
         </tr>
       </thead>
       <tbody>
-        <DetailsItem v-for="(match, id) in matches" :item="match" :key="match.input" :id="id" />
+        <DetailsItem v-for="(match, id) in matches" :item="match" :selected="match.selectedMatchIndex" :key="id + match.input" :id="id" />
       </tbody>
     </table>
   </section>
