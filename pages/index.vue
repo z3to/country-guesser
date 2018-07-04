@@ -1,7 +1,7 @@
 <template>
   <div class="page-body">
     <header class="page-header">
-      <h1>Country guesser</h1>
+      <h1>Country guesser</h1><a href="https://github.com/z3to/country-guesser">Source on Github</a>
     </header>
     <div class="page-options">
       <InputMeta />
@@ -37,5 +37,24 @@
 </script>
 
 <style lang="scss">
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+
+    * {
+      display: inline-block;
+      line-height: 1rem;
+    }
+
+    a {
+      color: #fff;
+      font-size: 0.8rem;
+
+      &:hover, &:focus {
+        border: 0;
+        color: #000;
+      }
+    }
+  }
 
 </style>
