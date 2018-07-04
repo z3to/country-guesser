@@ -1,25 +1,5 @@
 @charset "utf-8";
-
-$font-family-default: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !default;
-$base-font-weight: 400 !default;
-$base-line-height: 1.7 !default;
-
-$spacing-unit:     2rem !default;
-
-$text-color:       #222 !default;
-$brand-color:      #EC3A4D !default;
-$color-active: #40A5E7 !default;
-
-// Use media queries like this:
-// @include media-query($on-palm) {
-//   .wrapper {
-//     padding-right: $spacing-unit / 2;
-//     padding-left: $spacing-unit / 2;
-//   }
-// }
-
-$on-palm:          600px !default;
-$on-laptop:        800px !default;
+@import "./variables";
 
 @mixin media-query($device) {
   @media screen and (min-width: $device) {
@@ -34,8 +14,6 @@ blockquote, body, dd, dl, figure, h1, h2, h3, h4, h5, h6, hr, ol, p, pre, time, 
 
 html {
   font: normal normal 105%/1.7 $font-family-default;
-  font-weight: 400;
-  letter-spacing: 0.02em;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   -moz-osx-font-smoothing: grayscale;
@@ -47,7 +25,8 @@ html {
        -o-font-feature-settings: "kern" 1;
           font-feature-settings: "kern" 1;
   font-kerning: normal;
-  color: $text-color;
+  color: $color-default;
+  font-weight: $font-weight-default;
 }
 
 .mobile-invisible {
@@ -55,31 +34,16 @@ html {
   display: none;
 }
 
-@include media-query($on-palm) {
+@include media-query($on-tablet-portrait) {
   .mobile-invisible {
   	visibility: visible;
     display: inherit;
   }
 }
 
-input {
-  user-select: none;
-  vertical-align: middle;
-  white-space: nowrap;
-  zoom: 1;
-  border: 0;
-}
-
-input:focus,
-select:focus,
-textarea:focus,
-button:focus {
-  outline: none;
-}
-
-img {
-  max-width: 100%;
-  vertical-align: middle;
+a, .clickable {
+  text-decoration: none;
+  cursor: pointer;
 }
 
 *, *:before, *:after {
@@ -87,18 +51,44 @@ img {
   margin: 0;
 }
 
-nav li, nav ol {
-  display: inline-block;
+ul li, ol li {
   list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 figure > img {
   display: block;
+  width: 100%;
+}
+
+figure.placeholder {
+  background-color: #fff;
+  max-width: 600px;
+  height: 400px;
+  display: flex;
+  justify-content: center; /* align horizontal */
+  align-items: center; /* align vertical */
 }
 
 table {
+  width: 100%;
   border-spacing: 0;
-  border-collapse: collapse;
+  border-collapse: separate;
+
+  tr, td, th {
+    padding: 0;
+    margin: 0;
+  }
+}
+
+address {
+  font-style: inherit;
+
+  span {
+    display: inline-block;
+    padding-right: 0.2em;
+  }
 }
 
 @import

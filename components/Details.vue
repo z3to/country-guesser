@@ -1,14 +1,20 @@
 <template>
   <section class="details">
     <table>
-      <thead>
-        <tr>
-          <td>
+      <thead >
+        <tr v-if="!matches.length">
+          <th>← Insert list of countries in the left panel</th>
+        </tr>
+        <tr v-else>
+          <th>
             Input
-          </td>
-          <td>
-            Possibilities
-          </td>
+          </th>
+          <th>
+            Possible matches
+          </th>
+          <th>
+            Code
+          </th>
         </tr>
       </thead>
       <tbody>

@@ -3,54 +3,96 @@
 }
 
 a, .a, .link {
-  color: $brand-color;
+  color: $color-accent;
   text-decoration: none;
   cursor: pointer;
   font-weight: 500;
 
   &[href^='#'], &:not([href]) {
-    color: $brand-color;
+    color: $color-accent;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    color: $text-color;
+    color: $color-default;
   }
 
   &:visited {
-    color: darken($brand-color, 15%);
+    color: darken($color-accent, 15%);
   }
 
   &.nuxt-link-active {
-    color: $color-active;
+    color: $color-accent;
   }
 
   &:hover, &:focus {
-    border-bottom: 1px solid $brand-color;
-    color: darken($brand-color, 10%);
+    border-bottom: 1px solid $color-accent;
+    color: darken($color-accent, 10%);
   }
 }
 
 .link-hover {
-  border-bottom: 1px dashed $brand-color;
+  border-bottom: 1px dashed $color-accent;
 
   &:hover, &:focus {
     border-bottom-style: solid;
-    color: $brand-color;
+    color: $color-accent;
   }
 }
 
 h1 {
-  font-size: 1.6rem;
-  line-height: 1;
+  font-size: 1rem;
+  line-height: 1rem;
   font-weight: bold;
+  letter-spacing: 0.05em;
+  margin: 0;
+  padding: 0;
+}
+
+.page-header {
+  p {
+    font-size: 0.7rem;
+  }
 }
 
 h2 {
   font-weight: normal;
-  font-size: 1.2em;
-  font-weight: 700;
+  font-size: 1.2rem;
+  color: #161A1E;
+  font-weight: 600;
+  letter-spacing: 0.05em;
   line-height: 1.1;
-  margin: 1rem 0 2rem 0;
+  margin: 0.5rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #F0F0F0;
+
+  span {
+    font-size: 0.9rem;
+    color: #507FFF;
+    font-weight: normal;
+  }
+}
+
+h3 {
+  font-size: 1rem;
+  color: #161A1E;
+  margin: 0;
+  font-weight: 600;
+}
+
+.btn {
+  background-color: #fff;
+  border: 1px solid #507FFF;
+  font-size: 0.7rem;
+  color: #507FFF;
+  padding: 0.25rem 0.5rem;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: 0.1s;
+
+  &:hover, &:focus {
+    background-color: #507FFF;
+    color: #fff;
+  }
 }
 
 p, small, li {
@@ -60,17 +102,6 @@ p, small, li {
 
 small {
   font-size: 0.7rem;
-}
-
-h3 {
-  font-size: 1em;
-  font-weight: 600;
-  line-height: 1.2;
-  margin: 1rem 0;
-
-  &:first-child {
-    margin-top: 0;
-  }
 }
 
 h4 {
@@ -96,11 +127,31 @@ ul {
   margin-right: auto;
 }
 
+i {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  border-radius: 100%;
+
+  &.unsuccessful {
+    background-color: #EA5A47;
+  }
+
+  &.successful {
+    background-color: #B1CC33;
+  }
+
+  &.ambiguous {
+    background-color: #FFA224;
+  }
+}
+
 table {
   width: 100%;
   font-size: 0.8rem;
   line-height: 1.2em;
   border-collapse: collapse;
+  border-top: 1px solid #DBDBDB;
 
   td, th {
     padding: 0.8em 0.3em;
@@ -130,7 +181,7 @@ table {
       }
 
       &:last-child th {
-        border-bottom: 1px solid #999;
+        border-bottom: 1px solid #F0F0F0;
         padding-bottom: 0.5rem;
       }
     }
@@ -142,7 +193,7 @@ table {
 
   tbody {
     tr td {
-      border-bottom: 1px solid #999;
+      border-bottom: 1px solid #F0F0F0;
     }
 
     .warn {

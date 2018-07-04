@@ -1,8 +1,7 @@
 <template>
   <div class="page-body">
     <header class="page-header">
-      <h1>Country Lookup</h1>
-      <p>Put in a list of countries in the left panel, check the possible matchings and copy the output list.</p>
+      <h1>Country guesser</h1>
     </header>
     <div class="page-options">
       <InputMeta />

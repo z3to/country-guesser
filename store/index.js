@@ -48,10 +48,10 @@ const store = () => new Vuex.Store({
     optionInputValue: false,
     optionCommonName: false,
     codes: [
-      { text: 'cca2', value: 'cca2' },
-      { text: 'ccn3', value: 'ccn3' },
-      { text: 'cca3', value: 'cca3' },
-      { text: 'cioc', value: 'cioc' }
+      { text: 'ISO 3166-1 alpha-2 (CCA2)', value: 'cca2' },
+      { text: 'ISO 3166-1 alpha-3 (CCA3)', value: 'cca3' },
+      { text: 'ISO 3166-1 numeric (CCN3)', value: 'ccn3' },
+      { text: 'International Olympic Committee (CIOC)', value: 'cioc' }
     ],
     optionLineBreak: '\n',
     lineBreaks: [
@@ -80,7 +80,8 @@ const store = () => new Vuex.Store({
           'input': line,
           'matches': [],
           'selectedMatchIndex': 0,
-          'message': ''
+          'message': '',
+          'type': 'unsuccessful'
         }
 
         if (input.length < 2) {
@@ -228,7 +229,7 @@ const store = () => new Vuex.Store({
       state.optionCommonName = value
     },
     SET_OPTION_LINE_BREAK (state, value) {
-      // console.log('UPDATE_RAW_INPUT')
+      console.log('UPDATE_RAW_INPUT', value)
       state.optionLineBreak = value
     },
     SET_SELECTED_MATCH (state, { input, match }) {

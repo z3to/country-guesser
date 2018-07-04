@@ -1,6 +1,8 @@
 <template>
   <section class="output">
-    <h2>Output</h2>
+    <h2><span>3.</span> Output</h2>
+    <p>Matches and codes are based on <a href="https://github.com/mledoze/countries">this list</a>.</p>
+    <h3>Options</h3>
     <ul>
       <li>Output code:
         <select v-model="modelOptionOutputcode">
