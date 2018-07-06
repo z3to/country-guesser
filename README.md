@@ -1,7 +1,7 @@
 # Country guesser (alpha)
 Put in a list of countries in the left panel, check the possible matchings and copy the output list.
 
-[https://sad-bassi-0a3d2a.netlify.com/](https://sad-bassi-0a3d2a.netlify.com/)
+→ [countries.zeto.io](https://countries.zeto.io/)
 
 ## Build Setup
 
