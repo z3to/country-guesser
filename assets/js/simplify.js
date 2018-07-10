@@ -5,7 +5,7 @@ const cleanDiacritics = require('underscore.string/cleanDiacritics')
 
 function commonAbbreviation (str) {
   return str
-    .replace(/(St)(\.){0,1}\s/, 'Saint') // St(.) -> Saint
+    .replace(/(St)(\.){0,1}\s/, 'Saint ') // St(.) -> Saint
 }
 
 function onlyCommonLetter (str) {
