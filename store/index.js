@@ -65,15 +65,12 @@ const store = () => new Vuex.Store({
   },
   getters: {
     matches (state) {
-      console.log('new matches')
       const matches = _.map(state.lines, line => {
         const input = simplify(line)
 
         if (!_.isUndefined(state.cache[input])) {
-          console.log('found', input, 'in cache', state.cache[input]['selectedMatchIndex'])
           return state.cache[input]
         }
-        console.log('not found')
 
         let output = {
           'id': input,
@@ -229,7 +226,7 @@ const store = () => new Vuex.Store({
       state.optionCommonName = value
     },
     SET_OPTION_LINE_BREAK (state, value) {
-      console.log('UPDATE_RAW_INPUT', value)
+      // console.log('UPDATE_RAW_INPUT', value)
       state.optionLineBreak = value
     },
     SET_SELECTED_MATCH (state, { input, match }) {
